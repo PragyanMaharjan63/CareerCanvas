@@ -89,3 +89,23 @@ export const logout = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+export const authMiddleware = async (req, res, next) => {
+  const token = req.cookies.token;
+  try {
+    if (!token) {
+      return res.status(404).json({ message: "Token not found" });
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await Usermodel.findById(decoded.id).select(
+      "_id UserName Email"
+    );
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
