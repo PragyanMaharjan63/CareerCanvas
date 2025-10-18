@@ -1,9 +1,44 @@
-export const getSkills = (req, res) => {
+import userSkill from "../models/userSkills.js";
+export const getSkills = async (req, res) => {
   try {
-    const { _id } = req.user;
-    console.log(_id);
-    res.send({ message: "yay" });
+    const skills = await userSkill.find();
+    if (!skills) {
+      res.status(200).json({ message: "Add a new skill" });
+    }
+    res.status(200).json({ message: skills });
   } catch (error) {
-    res.send({ message: error });
+    res.status(500).json({ message: error.message });
   }
 };
+
+export const postSkills = async (req, res) => {
+  const { _id } = req.user;
+  const { name, level } = req.body;
+  try {
+    if (!name) {
+      res.status(400).json({ message: "Please enter the skills" });
+    }
+
+    const userskillexist = await userSkill.findOne({ Uid: _id });
+    if (userskillexist) {
+      const exist = userskillexist.skills.some((s) => s.name === name);
+      if (exist) {
+        return res.status(400).json({ message: "Skill already exist" });
+      }
+      userskillexist.skills.push({ name, level });
+      await userskillexist.save();
+      return res.status(200).json({ message: "Skill Added" });
+    }
+
+    const newSkill = new userSkill({
+      Uid: _id,
+      skills: [{ name, level }],
+    });
+    newSkill.save();
+    return res.status(200).json({ message: "Skill Added" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const putSkills = (req, res) => {};
+export const deleteSkills = (req, res) => {};
