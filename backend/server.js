@@ -5,6 +5,7 @@ import { config } from "dotenv";
 import connnectDB from "./database/connectdatabse.js";
 import AuthRoute from "./routes/authuserroutes.js";
 import SkillRoute from "./routes/userSkillsRoutes.js";
+import ProjectRoute from "./routes/userProjectsRoutes.js";
 config();
 const app = express();
 app.use(express.json());
@@ -18,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", AuthRoute);
-app.use("/api", SkillRoute);
+app.use("/api", SkillRoute, ProjectRoute);
 
 app.listen(PORT, () => {
   console.log("listening to ", PORT);

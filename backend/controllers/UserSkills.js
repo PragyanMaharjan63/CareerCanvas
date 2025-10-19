@@ -1,8 +1,8 @@
 import userSkill from "../models/userSkills.js";
-import mongoose from "mongoose";
+
 export const getSkills = async (req, res) => {
   try {
-    const skills = await userSkill.find();
+    const skills = await userSkill.find({ Uid: req.user._id });
     if (!skills) {
       res.status(200).json({ message: "Add a new skill" });
     }
@@ -17,7 +17,7 @@ export const postSkills = async (req, res) => {
   const { name, level } = req.body;
   try {
     if (!name) {
-      res.status(400).json({ message: "Please enter the skills" });
+      return res.status(400).json({ message: "Please enter the skills" });
     }
 
     const userskillexist = await userSkill.findOne({ Uid: _id });
@@ -41,7 +41,7 @@ export const postSkills = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-export const putSkills = (req, res) => {};
+
 export const deleteSkills = async (req, res) => {
   const { id } = req.params;
   try {
