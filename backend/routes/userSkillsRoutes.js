@@ -10,7 +10,7 @@ const SkillRoute = express.Router();
 
 SkillRoute.get("/skills", authMiddleware, getSkills);
 SkillRoute.post("/skills", authMiddleware, postSkills);
-SkillRoute.put("/skills:id", authMiddleware, putSkills);
-SkillRoute.delete("/skills:id", authMiddleware, deleteSkills);
+SkillRoute.put("/skills/:id", authMiddleware, putSkills);
+SkillRoute.delete("/skills/:id", authMiddleware, deleteSkills);
 
 export default SkillRoute;
