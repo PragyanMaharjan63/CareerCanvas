@@ -38,7 +38,9 @@ export const signin = async (req, res) => {
       sameSite: process.env.NODE_ENV === "Production" ? "none" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    return res.status(200).json({ message: "Succesfully signed in" });
+    return res
+      .status(200)
+      .json({ message: "Succesfully Registered, Please Login" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

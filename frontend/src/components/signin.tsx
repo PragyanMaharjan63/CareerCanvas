@@ -1,5 +1,7 @@
 import axios from "axios";
+import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import Toast from "../assets/ui/toast";
 
 type Inputs = {
   Username: string;
@@ -8,14 +10,31 @@ type Inputs = {
 };
 
 export default function Signin() {
+  const [ToastMessage, setToastMessage] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {};
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      const req = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
+        { UserName: data.Username, Email: data.Email, Password: data.Password },
+        { withCredentials: true, validateStatus: () => true }
+      );
+      setToastMessage(req.data.message);
+      if (req.status === 200) {
+        reset();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
+      {ToastMessage && <Toast message={ToastMessage} exit={setToastMessage} />}
       <div className="min-h-screen flex items-center justify-center p-4 bg-neutral-950">
         <div className="rounded-2xl flex ring-1 ring-neutral-500 w-full max-w-6xl overflow-hidden">
           {/* Left side banner - hidden on mobile */}
@@ -27,7 +46,10 @@ export default function Signin() {
           </div>
 
           {/* Form section */}
-          <div className="w-full md:w-3/5 lg:w-1/2 p-6 sm:p-8 lg:p-12">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full md:w-3/5 lg:w-1/2 p-6 sm:p-8 lg:p-12"
+          >
             <div className="flex flex-col items-start gap-6 max-w-md mx-auto">
               <div className="flex flex-col items-center text-center w-full">
                 <h1 className="text-2xl sm:text-3xl font-semibold mb-2">
@@ -77,8 +99,14 @@ export default function Signin() {
                   Password
                 </label>
                 <input
+                  {...register("Password", {
+                    required: "Enter Password",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters ",
+                    },
+                  })}
                   id="password"
-                  {...register("Password", { required: "Enter Password" })}
                   type="password"
                   className="ring-1 ring-neutral-600 focus:ring-neutral-400 py-2.5 px-3 w-full bg-neutral-900 rounded-lg outline-none transition-all"
                   placeholder="*****************"
@@ -91,7 +119,7 @@ export default function Signin() {
               </div>
 
               <button
-                onClick={handleSubmit(onSubmit)}
+                type="submit"
                 className="bg-white hover:bg-neutral-100 text-black font-medium w-full py-2.5 rounded-lg cursor-pointer transition-colors mt-2"
               >
                 Sign up
@@ -104,7 +132,7 @@ export default function Signin() {
                 </a>
               </p>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </>
