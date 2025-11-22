@@ -28,7 +28,8 @@ export const postSkills = async (req, res) => {
       }
       userskillexist.skills.push({ name, level });
       await userskillexist.save();
-      return res.status(200).json({ message: "Skill Added" });
+      const newSkill = userskillexist.skills[userskillexist.skills.length - 1];
+      return res.status(200).json({ message: "Skill Added", skill: newSkill });
     }
 
     const newSkill = new userSkill({
@@ -36,7 +37,7 @@ export const postSkills = async (req, res) => {
       skills: [{ name, level }],
     });
     newSkill.save();
-    return res.status(200).json({ message: "Skill Added" });
+    return res.status(200).json({ message: "Skill Added", skill: newSkill });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

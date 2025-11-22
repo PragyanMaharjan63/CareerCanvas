@@ -29,7 +29,7 @@ export default function Toast({ message, exit }: toastProps) {
       <div className="absolute right-3 top-3 ring-[0.5px] rounded-lg p-3 w-60 md:w-80 bg-neutral-800">
         {message}
         <div
-          className="h-1 bg-white transition-all"
+          className="h-1 bg-indigo-600/60 transition-all"
           style={{ width: `${width}%` }}
         />
       </div>

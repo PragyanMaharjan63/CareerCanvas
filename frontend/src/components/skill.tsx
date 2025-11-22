@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import Popup from "../assets/ui/popup";
 import axios from "axios";
+import { Trash2 } from "lucide-react";
+import Toast from "../assets/ui/toast";
 
 type skill = {
   name: string;
   level: number;
+  _id: string;
 };
 
 export default function SkillSection() {
+  const [ToastMessage, setToastMessage] = useState("");
   const [datas, setData] = useState<skill[]>([]);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -31,20 +35,29 @@ export default function SkillSection() {
       level: value.Inp4,
     };
 
-    setData((prev) => [...prev, transformData]);
     try {
       const req = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/skills`,
         { name: transformData.name, level: transformData.level },
         { withCredentials: true }
       );
-      console.log(req);
+      setData((prev) => [...prev, req.data.skill]);
+      setToastMessage(req.data.message);
     } catch (err) {
       console.log(err);
     }
   };
+  const handleDeleteSkill = async (_id: string) => {
+    const req = await axios.delete(
+      `${import.meta.env.VITE_BACKEND_URL}/api/skills/${_id}`,
+      { withCredentials: true }
+    );
+    setData((prev) => prev.filter((skill) => skill._id !== _id));
+    setToastMessage(req.data.message);
+  };
   return (
     <>
+      {ToastMessage && <Toast message={ToastMessage} exit={setToastMessage} />}
       <div className="grid gap-4 w-full">
         {showPopup && (
           <div className="fixed inset-0 w-full top-0 left-0 bg-black/60">
@@ -63,9 +76,15 @@ export default function SkillSection() {
             {datas?.map((skill, idx) => (
               <div
                 className="ring-1 ring-indigo-600/40 p-2 rounded-lg bg-indigo-700/10"
-                key={idx}
+                key={skill._id || idx}
               >
-                <p className="font-bold text-xl">{skill.name}</p>
+                <div className="flex justify-between">
+                  <p className="font-bold text-xl">{skill.name}</p>
+                  <Trash2
+                    className="p-1 size-8 cursor-pointer hover:ring-red-600 hover:ring-1 rounded-lg hover:bg-red-700/60"
+                    onClick={() => handleDeleteSkill(skill._id)}
+                  />
+                </div>
                 <div className="flex justify-between text-neutral-400">
                   <p>Skill Confidence</p>
                   {skill.level}
