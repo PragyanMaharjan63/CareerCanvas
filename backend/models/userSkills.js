@@ -5,7 +5,7 @@ const userSkillsSchema = mongoose.Schema({
   skills: [
     {
       name: { type: String, requried: true },
-      level: { type: Number, min: 0, max: 100 },
+      level: { type: Number, min: 0, max: 100, required: true },
     },
   ],
 });

@@ -1,16 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Popup from "../assets/ui/popup";
+import axios from "axios";
 
 type skill = {
-  Inp1: string;
-  Inp4: string | number;
+  name: string;
+  level: number;
 };
 
 export default function SkillSection() {
   const [datas, setData] = useState<skill[]>([]);
   const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      const req = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/skills`,
+        { withCredentials: true }
+      );
+      setData(req.data.message[0].skills);
+    };
+    getData();
+  }, []);
+
   const HandleAddSkill = () => {
     setShowPopup(true);
+  };
+  const HandleSubmitSkill = async (value: any) => {
+    const transformData = {
+      name: value.Inp1,
+      level: value.Inp4,
+    };
+
+    setData((prev) => [...prev, transformData]);
+    try {
+      const req = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/skills`,
+        { name: transformData.name, level: transformData.level },
+        { withCredentials: true }
+      );
+      console.log(req);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>
@@ -21,10 +52,9 @@ export default function SkillSection() {
               inpType="Skill"
               input1={true}
               input4={true}
-              setData={(value) => {
-                setData((prev) => [...prev, value]);
-              }}
+              setData={() => {}}
               showPopup={setShowPopup}
+              handleSubmit={HandleSubmitSkill}
             />
           </div>
         )}
@@ -35,15 +65,15 @@ export default function SkillSection() {
                 className="ring-1 ring-indigo-600/40 p-2 rounded-lg bg-indigo-700/10"
                 key={idx}
               >
-                <p className="font-bold text-xl">{skill.Inp1}</p>
+                <p className="font-bold text-xl">{skill.name}</p>
                 <div className="flex justify-between text-neutral-400">
                   <p>Skill Confidence</p>
-                  {skill.Inp4}
+                  {skill.level}
                 </div>
                 <div className="size-2 bg-indigo-200 w-full mb-2">
                   <div
                     className="size-2 bg-indigo-600/80"
-                    style={{ width: `${skill.Inp4}%` }}
+                    style={{ width: `${skill.level}%` }}
                   ></div>
                 </div>
               </div>

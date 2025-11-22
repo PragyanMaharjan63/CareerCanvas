@@ -100,7 +100,7 @@ export const authMiddleware = async (req, res, next) => {
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await Usermodel.findById(decoded.id).select(
-      "_id UserName Email"
+      "_id UserName Email ProfilePicture"
     );
     if (!user) {
       return res.status(404).json({ message: "User not found" });

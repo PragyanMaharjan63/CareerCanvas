@@ -9,6 +9,7 @@ type popupProps = {
   input5?: boolean;
   setData: React.Dispatch<SetStateAction<any>>;
   showPopup: React.Dispatch<SetStateAction<boolean>>;
+  handleSubmit: (data: any) => void;
 };
 export default function Popup({
   inpType,
@@ -19,6 +20,7 @@ export default function Popup({
   input5,
   setData,
   showPopup,
+  handleSubmit,
 }: popupProps) {
   const [Inp1, setInp1] = useState("");
   const [Inp2, setInp2] = useState("");
@@ -27,13 +29,15 @@ export default function Popup({
   const [Inp5, setInp5] = useState("");
 
   const submitData = () => {
-    const data: { [key: string]: string } = {};
+    const data: { [key: string]: string | number } = {};
     if (input1) data.Inp1 = Inp1;
     if (input2) data.Inp2 = Inp2;
     if (input3) data.Inp3 = Inp3;
-    if (input4) data.Inp4 = Inp4;
+    if (input4) data.Inp4 = Number(Inp4);
     if (input5) data.Inp5 = Inp5;
     setData(data);
+    handleSubmit(data);
+    showPopup(false);
   };
 
   return (
