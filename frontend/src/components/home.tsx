@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import GoalSection from "./goals";
 import ProjectSection from "./projects";
 import SkillSection from "./skill";
@@ -62,9 +62,9 @@ export default function Home() {
               <img src={user?.ProfilePicture} alt="picture" />
             </div>
             {dropdown && (
-              <div className="absolute grid gap-3 bottom-0 translate-y-28 rounded-xl w-40 right-0 p-2 z-20 bg-neutral-800/90">
+              <div className="absolute grid gap-3 bottom-0 translate-y-15 rounded-xl w-40 right-0 p-2 z-20 bg-neutral-800/90">
                 <div
-                  className="bg-neutral-600 rounded-lg p-2 cursor-pointer"
+                  className="bg-neutral-700 hover:bg-neutral-600 rounded-lg p-2 cursor-pointer"
                   onClick={() => {
                     handleLogout();
                   }}
@@ -74,7 +74,7 @@ export default function Home() {
               </div>
             )}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-4 mx-3">
+          <div className="grid items-start grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-4 mx-3">
             <div className="flex items-center  justify-between  bg-neutral-800 rounded-2xl p-3 ">
               <SkillSection />
             </div>

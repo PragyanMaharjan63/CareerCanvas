@@ -65,7 +65,6 @@ export default function SkillSection() {
               inpType="Skill"
               input1={true}
               input4={true}
-              setData={() => {}}
               showPopup={setShowPopup}
               handleSubmit={HandleSubmitSkill}
             />

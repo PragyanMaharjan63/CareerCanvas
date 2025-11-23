@@ -7,6 +7,7 @@ const userprojectsSchema = mongoose.Schema({
       Title: { type: String, required: true },
       Description: { type: String, required: true },
       Link: String,
+      PreviewLink: String,
     },
   ],
 });

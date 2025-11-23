@@ -97,7 +97,7 @@ export default function Login() {
             </div>
             <p className="text-center text-sm text-neutral-400 w-full">
               Don't have an account?{" "}
-              <a href="#" className="text-white hover:underline">
+              <a href="/signin" className="text-white hover:underline">
                 Sign in
               </a>
             </p>

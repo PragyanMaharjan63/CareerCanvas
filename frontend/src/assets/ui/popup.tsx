@@ -7,7 +7,7 @@ type popupProps = {
   input3?: boolean;
   input4?: boolean;
   input5?: boolean;
-  setData: React.Dispatch<SetStateAction<any>>;
+
   showPopup: React.Dispatch<SetStateAction<boolean>>;
   handleSubmit: (data: any) => void;
 };
@@ -18,7 +18,7 @@ export default function Popup({
   input3,
   input4,
   input5,
-  setData,
+
   showPopup,
   handleSubmit,
 }: popupProps) {
@@ -35,9 +35,8 @@ export default function Popup({
     if (input3) data.Inp3 = Inp3;
     if (input4) data.Inp4 = Number(Inp4);
     if (input5) data.Inp5 = Inp5;
-    setData(data);
+
     handleSubmit(data);
-    showPopup(false);
   };
 
   return (
@@ -60,33 +59,33 @@ export default function Popup({
                 type="text"
                 value={Inp1}
                 onChange={(e) => setInp1(e.target.value)}
-                placeholder="Input 1"
+                placeholder={`Enter ${inpType} name`}
               />
             </div>
           )}
           {/* inp2 - code link */}
           {input2 && (
             <div className="grid gap-1">
-              <p className="text-sm font-light">InputLabel1</p>
+              <p className="text-sm font-light">Github Link</p>
               <input
                 className="bg-neutral-700 ring-1 ring-neutral-500 rounded-md px-3 py-1 focus:ring-2 transition-all outline-none"
                 type="text"
                 value={Inp2}
                 onChange={(e) => setInp2(e.target.value)}
-                placeholder="Input 1"
+                placeholder={`https://github.com/example`}
               />
             </div>
           )}
-          {/* inp-3 - github link */}
+          {/* inp-3 - preview link */}
           {input3 && (
             <div className="grid gap-1">
-              <p className="text-sm font-light">InputLabel1</p>
+              <p className="text-sm font-light">Preview Link</p>
               <input
                 className="bg-neutral-700 ring-1 ring-neutral-500 rounded-md px-3 py-1 focus:ring-2 transition-all outline-none"
                 type="text"
                 value={Inp3}
                 onChange={(e) => setInp3(e.target.value)}
-                placeholder="Input 1"
+                placeholder={`https://example.com`}
               />
             </div>
           )}
@@ -111,13 +110,13 @@ export default function Popup({
           {/* inp-5 - extra */}
           {input5 && (
             <div className="grid gap-1">
-              <p className="text-sm font-light">InputLabel1</p>
+              <p className="text-sm font-light">Description</p>
               <input
                 className="bg-neutral-700 ring-1 ring-neutral-500 rounded-md px-3 py-1 focus:ring-2 transition-all outline-none"
                 type="text"
                 value={Inp5}
                 onChange={(e) => setInp5(e.target.value)}
-                placeholder="Input 1"
+                placeholder={`Describe your ${inpType}`}
               />
             </div>
           )}
