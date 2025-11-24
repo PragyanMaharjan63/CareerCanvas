@@ -2,18 +2,18 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { config } from "dotenv";
-import connnectDB from "./database/connectdatabse.js";
-import AuthRoute from "./routes/authuserroutes.js";
-import SkillRoute from "./routes/userSkillsRoutes.js";
-import ProjectRoute from "./routes/userProjectsRoutes.js";
-import GoalsRoute from "./routes/userGoalsRoutes.js";
+import connnectDB from "../database/connectdatabse.js";
+import AuthRoute from "../routes/authuserroutes.js";
+import SkillRoute from "../routes/userSkillsRoutes.js";
+import ProjectRoute from "../routes/userProjectsRoutes.js";
+import GoalsRoute from "../routes/userGoalsRoutes.js";
 config();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://career-canvas-eight.vercel.app/",
     credentials: true,
   })
 );
