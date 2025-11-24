@@ -11,9 +11,13 @@ config();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://career-canvas-eight.vercel.app/", // your deployed frontend
+];
 app.use(
   cors({
-    origin: "https://career-canvas-eight.vercel.app/",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
@@ -24,7 +28,6 @@ connnectDB();
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
-
 app.use("/api/auth", AuthRoute);
 app.use("/api", SkillRoute);
 app.use("/api", ProjectRoute);
