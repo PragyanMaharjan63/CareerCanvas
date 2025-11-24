@@ -28,10 +28,10 @@ connnectDB();
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
-app.use("/api/auth", AuthRoute);
-app.use("/api", SkillRoute);
-app.use("/api", ProjectRoute);
-app.use("/api", GoalsRoute);
+app.use("api/auth", AuthRoute);
+app.use("api", SkillRoute);
+app.use("api", ProjectRoute);
+app.use("api", GoalsRoute);
 
 app.listen(PORT, () => {
   console.log("listening to ", PORT);
