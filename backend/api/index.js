@@ -34,5 +34,5 @@ app.use("/api", ProjectRoute);
 app.use("/api", GoalsRoute);
 
 app.listen(PORT, () => {
-  console.log("listening to ", PORT);
+  console.log("listening to the", PORT);
 });
