@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://career-canvas-eight.vercel.app/", // your deployed frontend
+  "https://career-canvas-five.vercel.app/", // your deployed frontend
 ];
 app.use(
   cors({

@@ -78,10 +78,10 @@ export default function Home() {
             <div className="flex items-center  justify-between  bg-neutral-800 rounded-2xl p-3 ">
               <SkillSection />
             </div>
-            <div className="flex items-center  justify-between  bg-neutral-800 rounded-2xl p-3">
+            <div className="flex items-center justify-between  bg-neutral-800 rounded-2xl p-3">
               <ProjectSection />
             </div>
-            <div className="flex items-center  justify-between  bg-neutral-800 rounded-2xl p-3">
+            <div className="flex items-center justify-between  bg-neutral-800 rounded-2xl p-3">
               <GoalSection />
             </div>
           </div>
