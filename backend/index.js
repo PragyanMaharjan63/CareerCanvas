@@ -23,16 +23,27 @@ app.use(
 );
 
 const PORT = process.env.PORT || 3000;
-connnectDB();
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
-app.use("/api/auth", AuthRoute);
-app.use("/api", SkillRoute);
-app.use("/api", ProjectRoute);
-app.use("/api", GoalsRoute);
+const startServer = async () => {
+  try {
+    await connnectDB();
 
-app.listen(PORT, () => {
-  console.log("listening to the", PORT);
-});
+    app.get("/", (req, res) => {
+      res.send("Hello world");
+    });
+
+    app.use("/api/auth", AuthRoute);
+    app.use("/api", SkillRoute);
+    app.use("/api", ProjectRoute);
+    app.use("/api", GoalsRoute);
+
+    app.listen(PORT, () => {
+      console.log("listening to the", PORT);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
