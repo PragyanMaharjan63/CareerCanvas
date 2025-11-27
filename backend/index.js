@@ -10,13 +10,10 @@ import GoalsRoute from "./routes/userGoalsRoutes.js";
 configDotenv();
 const app = express();
 const PORT = process.env.PORT || 3000;
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://career-canvas-five.vercel.app/", // your deployed frontend
-];
+
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: "https://career-canvas-five.vercel.app/",
     credentials: true,
   })
 );
