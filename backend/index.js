@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: "https://career-canvas-five.vercel.app/",
+    origin: "https://career-canvas-five.vercel.app",
     credentials: true,
   })
 );
