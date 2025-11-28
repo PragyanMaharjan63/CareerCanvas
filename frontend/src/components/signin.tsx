@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import Toast from "../assets/ui/toast";
+import { Eye, EyeClosed } from "lucide-react";
 
 type Inputs = {
   Username: string;
@@ -11,6 +12,7 @@ type Inputs = {
 
 export default function Signin() {
   const [ToastMessage, setToastMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -98,19 +100,29 @@ export default function Signin() {
                 <label htmlFor="password" className="font-medium">
                   Password
                 </label>
-                <input
-                  {...register("Password", {
-                    required: "Enter Password",
-                    minLength: {
-                      value: 8,
-                      message: "Password must be at least 8 characters ",
-                    },
-                  })}
-                  id="password"
-                  type="password"
-                  className="ring-1 ring-neutral-600 focus:ring-neutral-400 py-2.5 px-3 w-full bg-neutral-900 rounded-lg outline-none transition-all"
-                  placeholder="*****************"
-                />
+                <div className="relative w-full">
+                  <div
+                    className="absolute right-4 top-2 cursor-pointer"
+                    onClick={() => {
+                      setShowPassword((prev) => !prev);
+                    }}
+                  >
+                    {showPassword ? <Eye /> : <EyeClosed />}
+                  </div>
+                  <input
+                    {...register("Password", {
+                      required: "Enter Password",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters ",
+                      },
+                    })}
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    className="ring-1 ring-neutral-600 focus:ring-neutral-400 py-2.5 px-3 w-full bg-neutral-900 rounded-lg outline-none transition-all"
+                    placeholder="*****************"
+                  />
+                </div>
                 {errors.Password && (
                   <p className="text-sm text-red-500">
                     {errors.Password.message}

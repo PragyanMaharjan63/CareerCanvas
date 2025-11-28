@@ -2,8 +2,8 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
 import Toast from "../assets/ui/toast";
-import { useNavigate } from "react-router-dom";
 import { useBackend } from "../context/globalcontext";
+import { Eye, EyeClosed } from "lucide-react";
 type Inputs = {
   Email: string;
   Password: string;
@@ -12,6 +12,7 @@ type Inputs = {
 export default function Login() {
   const [ToastMessage, setToastMessage] = useState("");
   const { checkAuth } = useBackend();
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -70,19 +71,30 @@ export default function Login() {
               </div>
               <div>
                 <label htmlFor="password">Password</label>
-                <input
-                  {...register("Password", {
-                    required: "Enter Password",
-                    minLength: {
-                      value: 8,
-                      message: "Password must be at least 8 characters ",
-                    },
-                  })}
-                  type="password"
-                  id="password"
-                  placeholder="*****************"
-                  className="ring-1 ring-neutral-600 focus:ring-neutral-400 py-2.5 px-3 w-full bg-neutral-900 rounded-lg outline-none transition-all"
-                />
+                <div className="relative">
+                  <div
+                    className="absolute right-4 top-3 cursor-pointer"
+                    onClick={() => {
+                      setShowPassword((prev) => !prev);
+                    }}
+                  >
+                    {showPassword ? <Eye /> : <EyeClosed />}
+                  </div>
+
+                  <input
+                    {...register("Password", {
+                      required: "Enter Password",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters ",
+                      },
+                    })}
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    placeholder="*****************"
+                    className="ring-1 ring-neutral-600 focus:ring-neutral-400 py-2.5 px-3 w-full bg-neutral-900 rounded-lg outline-none transition-all"
+                  />
+                </div>
                 {errors.Password && (
                   <p className="text-sm text-red-500">
                     {errors.Password.message}
