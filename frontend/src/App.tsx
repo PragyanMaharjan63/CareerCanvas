@@ -1,18 +1,13 @@
-import { Routes, Route } from "react-router-dom";
-import Signin from "./components/signin";
-import Login from "./components/login";
-import Home from "./components/home";
-
+import Router from "./routes/routes";
+import { BackendProvider } from "./context/globalcontext";
 function App() {
   return (
     <>
-      <div className="grid place-items-center h-screen text-white">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </div>
+      <BackendProvider>
+        <div className="grid place-items-center h-screen text-white">
+          <Router />
+        </div>
+      </BackendProvider>
     </>
   );
 }

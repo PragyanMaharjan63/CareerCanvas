@@ -11,9 +11,13 @@ configDotenv();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://career-canvas-five.vercel.app",
+];
 app.use(
   cors({
-    origin: "https://career-canvas-five.vercel.app",
+    origin: allowedOrigins,
     credentials: true,
   })
 );

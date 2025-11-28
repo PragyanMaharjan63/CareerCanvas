@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import Toast from "../assets/ui/toast";
 import { useNavigate } from "react-router-dom";
+import { useBackend } from "../context/globalcontext";
 type Inputs = {
   Email: string;
   Password: string;
@@ -10,7 +11,7 @@ type Inputs = {
 
 export default function Login() {
   const [ToastMessage, setToastMessage] = useState("");
-  const navigate = useNavigate();
+  const { checkAuth } = useBackend();
   const {
     register,
     handleSubmit,
@@ -27,7 +28,7 @@ export default function Login() {
       if (req.status === 200) {
         console.log(req.data.message);
         setToastMessage(req.data.message);
-        navigate("/");
+        await checkAuth();
       }
       console.log(req.data.message);
       setToastMessage(req.data.message);

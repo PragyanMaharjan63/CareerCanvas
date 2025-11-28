@@ -5,34 +5,17 @@ import SkillSection from "./skill";
 import axios from "axios";
 import Toast from "../assets/ui/toast";
 import { useNavigate } from "react-router-dom";
-
-type userDetails = {
-  _id: string;
-  UserName: string;
-  Email: string;
-  ProfilePicture: string;
-};
+import { useBackend } from "../context/globalcontext";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<userDetails>();
+  const { checkAuth, user } = useBackend();
+
   const [dropdown, setDropdown] = useState(false);
   const [ToastMessage, setToastMessage] = useState("");
   useEffect(() => {
-    const isAuth = async () => {
-      try {
-        const req = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/auth/me`,
-          { withCredentials: true }
-        );
-        if (req.status === 200) {
-          setUser(req.data.user);
-        }
-      } catch (err) {
-        navigate("/login");
-      }
-    };
-    isAuth();
+    checkAuth();
+    // isAuth();
   }, []);
   const handleLogout = async () => {
     let req = await axios.post(
