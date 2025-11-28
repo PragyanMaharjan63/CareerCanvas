@@ -37,7 +37,6 @@ export function BackendProvider({ children }: { children: ReactNode }) {
         withCredentials: true,
         validateStatus: () => true,
       });
-      console.log(req.data.user);
       if (req.status === 200) {
         setLogin(true);
         setUser(req.data.user);
